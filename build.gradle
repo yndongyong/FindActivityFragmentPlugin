@@ -1,0 +1,84 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.8.0'
+    id 'org.jetbrains.intellij' version '1.13.3'
+}
+
+group 'com.yndongyong.androiddevplugin'
+version '0.0.3'
+
+repositories {
+    maven { url "${ali_public}" }
+    maven { url "${ali_google}" }
+    maven { url "${ali_gradle}" }
+    mavenCentral()
+}
+
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+compileKotlin {
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_17.toString()
+}
+//tasks{
+//    compileKotlin {
+//        kotlinOptions.jvmTarget = JavaVersion.VERSION_17.toString()
+//    }
+//}
+
+dependencies {
+//    gradle 插件增加了
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.0"
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+
+}
+
+//jar {
+//    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+//}
+
+// See https://github.com/JetBrains/gradle-intellij-plugin/
+intellij {
+    localPath = project.hasProperty("StudioRunPath") ? StudioRunPath : StudioCompilePath
+    type = "IC"
+    plugins = ["java", "android"]
+    //设置使用改插件的idea版本不必与 插件的 sinceBuild 要求一致
+    updateSinceUntilBuild = false
+    patchPluginXml {
+        version = project.version
+//    sinceBuild = '210'
+//        see https://plugins.jetbrains.com/docs/intellij/build-number-ranges.html
+//        see https://plugins.jetbrains.com/docs/intellij/android-studio-releases-list.html#2022
+        sinceBuild = '222.4459'
+//    untilBuild = '232.*'
+        changeNotes = """
+        <b>0.0.1</b> 2024年8月5号<br>
+        <ul>
+            <li>find activity and its fragment</li>
+        </ul>
+        <em>happy to used</em>
+    """
+
+    }
+}
+
+/*runIde {
+    // Absolute path to installed target 3.5 Android Studio to use as
+    // IDE Development Instance (the "Contents" directory is macOS specific):
+    ideDir = file("D:\\Android\\android-studio")
+}*/
+//非常重要，不然buildplugin会失败
+buildSearchableOptions {
+    enabled = false
+}
+
+test {
+    useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}

@@ -1,0 +1,46 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>com.yndongyong.androiddevhelper</id>
+
+    <!-- Public plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <name>FindActivityFragment</name>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor email="yndongyong@gmail.com" url="https://yndongyong.github.io">yndongyong</vendor>
+
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+    <description><![CDATA[
+    An Android Studio plugin that finds the current Android activity and its inner fragments on the current app page when ADB is active.<br>
+    Adapted for Android 7-14<br>
+    获取App当前页面涉及的Activity和Fragment<br>
+    usage:<br>
+    <ul>
+        <li>Through the Code ->FindFindActivity menu</li>
+        <li>shortcut key Alt+0 (windows)</li>
+    </ul>
+    <em>by yndongyong</em>
+  ]]></description>
+
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.java</depends>
+    <depends>com.intellij.modules.androidstudio</depends>
+    <depends>org.jetbrains.android</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <notificationGroup displayType="BALLOON" id="DongAndroidDevHelper Notification Group"/>
+    </extensions>
+
+    <actions>
+        <!-- find Activity -->
+        <action id="FindActivity" class="com.yndongyong.androiddevhelper.findact.FindActivityAction" text="FindActivity">
+            <add-to-group group-id="CodeMenu" anchor="last"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="alt 0"/>
+        </action>
+    </actions>
+</idea-plugin>
